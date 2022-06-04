@@ -17,15 +17,15 @@ The Pipeline design is usually related with compromises, within the CmdLets in t
 ![ProgressBar](/Media/ProgressBar.jpg)
 
 * Working with the pipeline. Using "begin", "process" and "end" methods improves the performance.
-![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.JPG)
-![ObjectInsertWithPipeline](/Media/ObjectInsertWithPipeline.JPG)
+![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.jpg)
+![ObjectInsertWithPipeline](/Media/ObjectInsertWithPipeline.jpg)
 
 * Bulk insert of PowerShell Objects into specified Table within specified DataBase. Managing of the Primary Key uniqueness violation SQL errors, when the inserted entries already exist and ConflictingClause is specified.
 
 * Usage of SQL Transactions. The CmdLets Can evaluate whether transaction is required and automatically manage the transactions. This feature can be disabled if the transactions are manually managed within the SQL Query.
  
 * Built-in performance measurement accessible in Verbose stream.
-![VerifyTableCreation](/Media/VerifyTableCreation.JPG)
+![VerifyTableCreation](/Media/VerifyTableCreation.jpg)
 
 * PowerShell Parameter Sets defining the SQL Authentication
 
@@ -33,7 +33,7 @@ The Pipeline design is usually related with compromises, within the CmdLets in t
 
 * The SQL Queries are evaluated about keywords and modified accordingly with information from the CmdLet Parameters. In this way switching from DEV DataBase to Production DataBase is transperant and does not require change of the scripts code or SQL files.
 When the keyword <DataBaseName> is used in a query it will be replaced with the value spacified to the "DataBase" parameter.
-![QrySelect](/Media/QrySelect.JPG)
+![QrySelect](/Media/QrySelect.jpg)
 
 For additional information, please use the CmdLets built-in help.
 ```powershell
@@ -82,7 +82,7 @@ $DataBase = "MyDataBase";
 
 
 Create "TestTable" in the specified DataBase
-![CreateTable](/Media/CreateTable.JPG)
+![CreateTable](/Media/CreateTable.jpg)
 ```powershell
 
 
@@ -132,7 +132,7 @@ Invoke-SnsMsSqlQuery `
 
 
 Verify the table creation
-![VerifyTableCreation](/Media/VerifyTableCreation.JPG)
+![VerifyTableCreation](/Media/VerifyTableCreation.jpg)
 ```powershell
 
 
@@ -153,7 +153,7 @@ Invoke-SnsMsSqlQuery `
 
 
 Generate large amount of data with PowerShell
-![GenerateHashtableData](/Media/GenerateHashtableData.JPG)
+![GenerateHashtableData](/Media/GenerateHashtableData.jpg)
 ```powershell
 
 
@@ -177,7 +177,7 @@ $CmdStart = [System.DateTime]::now;
 
 
 Insert the Data using the pipeline
-![QryInsertPipeline](/Media/QryInsertPipeline.JPG)
+![QryInsertPipeline](/Media/QryInsertPipeline.jpg)
 ```powershell
 
 
@@ -211,7 +211,7 @@ Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Quer
 ```
 
 * Insert data without using the Pipeline, and verify the insert.
-![QryInsertNoPipeline](/Media/QryInsertNoPipeline.JPG)
+![QryInsertNoPipeline](/Media/QryInsertNoPipeline.jpg)
 ```powershell
 
 
@@ -291,7 +291,7 @@ Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Quer
 * Example how to use "Invoke-SnsMsSqlQuery" for bulk upload
 
 Generate a collection of objects
-![GenerateObjectData](/Media/GenerateObjectData.JPG)
+![GenerateObjectData](/Media/GenerateObjectData.jpg)
 ```powershell
 
 
@@ -314,7 +314,7 @@ ForEach ($a in 1..100000)
 
 
 Convert the objects array to Hashtables collection
-![ConvertPsObjToHashtbl](/Media/ConvertPsObjToHashtbl.JPG)
+![ConvertPsObjToHashtbl](/Media/ConvertPsObjToHashtbl.jpg)
 ```powershell
 
 
@@ -363,7 +363,7 @@ The object properties must match the destination table column names exactly. The
 The reason to make this CmdLet is to be simplified the bulk upload and eliminate the need of converting the input objects to Hashtables.
 
 Without using the pipeline
-![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.JPG)
+![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.jpg)
 ```powershell
 
 
@@ -400,7 +400,7 @@ Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Quer
 
 
 Using the pipeline
-![ObjectInsertWithPipeline](/Media/ObjectInsertWithPipeline.JPG)
+![ObjectInsertWithPipeline](/Media/ObjectInsertWithPipeline.jpg)
 ```powershell
 
 
