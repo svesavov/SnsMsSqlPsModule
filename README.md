@@ -32,7 +32,7 @@ The Pipeline design is usually related with compromises, within the CmdLets in t
 * Possibility to keep the SQL Queries outside of the scripts to simplify the changes with future scripts versions release, allowing to change the scripts code without to modify the SQL part, or modifying of the SQL Queries whenever something is changed on the SQL DataBase without need of new script version release.
 
 * The SQL Queries are evaluated about keywords and modified accordingly with information from the CmdLet Parameters. In this way switching from DEV DataBase to Production DataBase is transperant and does not require change of the scripts code or SQL files.
-When the keyword <DataBaseName> is used in a query it will be replaced with the value spacified to the "DataBase" parameter.
+When the keyword <DataBaseName> is used in a query it will be replaced with the value specified to the "DataBase" parameter.
 ![QrySelect](/Media/QrySelect.jpg)
 
 For additional information, please use the CmdLets built-in help.
