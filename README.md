@@ -14,7 +14,7 @@ The Pipeline design is usually related with compromises, within the CmdLets in t
 ## Features
 
 * Progress Bar is visible only when a CmdLet is executed interactively. This improves the performance of scripts running as a service on a schedule.
-![ProgressBar](/Media/ProgressBar.JPG)
+![ProgressBar](/Media/ProgressBar.jpg)
 
 * Working with the pipeline. Using "begin", "process" and "end" methods improves the performance.
 ![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.JPG)
