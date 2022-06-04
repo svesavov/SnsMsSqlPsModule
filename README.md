@@ -35,7 +35,7 @@ The Pipeline design is usually related with compromises, within the CmdLets in t
 When the keyword <DataBaseName> is used in a query it will be replaced with the value spacified to the "DataBase" parameter.
 ![QrySelect](/Media/QrySelect.JPG)
 
-For additional information, please use the CmdLets built-in help.
+For additional information, please use the CmdLets built-in help
 ```powershell
 Get-Help Invoke-SnsMsSqlQuery -Full;
 Get-Help Invoke-SnsMsSqlObjectInsert -Full;
