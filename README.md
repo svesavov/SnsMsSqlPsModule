@@ -5,31 +5,30 @@
 
 # SnsMsSqlPsModule PowerShell Module
 
-This is a PowerShell module for working with [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) DataBases, based on my previous project related with SQLite serverless DataBases, named ["SnsSqlitePsModule"](https://github.com/svesavov/SnsSqlitePsModule).
-Working with SQLite is nice and free, it is good for learning SQL, and decent for usage within production automations and scripts, to keep temporary or configuration data (If the machine that hosts the automation have fast Hard Disks). However where it comes to large volumes of data, accessed by multiple automations or scripts, arises the need of some more powerful Server / Service based DataBase, capable to better manage the DataBase locks.
-In general the PowerShell binary CmdLets are much faster comparing with the written-on PowerShell ones. Which was my main argument to make this PowerShell module a Binary Module.
-The Pipeline design is usually related with compromises, within the CmdLets in this module, I preferred to make the pipelines to be possible running multiple SQL queries, or single SQL query with multiple SQL Parameters against a single DataBase, rather than running a single SQL Query with or without single SQL Parameters set against multiple DataBases. The previous experience shows that such a scenario has no usage at all.
+* This is a PowerShell module for working with [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) DataBases, based on my previous project related with SQLite serverless DataBases, named ["SnsSqlitePsModule"](https://github.com/svesavov/SnsSqlitePsModule). Working with SQLite is nice and free, it is good for learning SQL, and decent for usage within production automations and scripts, to keep temporary or configuration data (If the machine that hosts the automation have fast Hard Disks). However where it comes to large volumes of data, accessed by multiple automations or scripts, arises the need of some more powerful Server / Service based DataBase, capable to better manage the DataBase locks.
+* In general the PowerShell binary CmdLets are much faster comparing with the written-on PowerShell ones. Which was my main argument to make this PowerShell module a Binary Module.
+* The Pipeline design is usually related with compromises. Within the CmdLets in this module, I choose to make the pipelines capable to process multiple SQL queries, or single SQL query with multiple SQL Parameters against a single DataBase. Rather than running a single SQL Query with or without SQL Parameters set against multiple DataBases. The previous experience shows that such a scenario has no usage at all.
 
 
 ## Features
 
-* Progress Bar is visible only when a CmdLet is executed interactively. This improves the performance of scripts running as a service on a schedule.
+* Progress Bar is visible only when a CmdLet is executed interactively. This improves the performance of the scripts and the automations running as a service on a schedule.
 ![ProgressBar](/Media/ProgressBar.jpg)
 
 * Working with the pipeline. Using "begin", "process" and "end" methods improves the performance.
 ![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.jpg)
 ![ObjectInsertWithPipeline](/Media/ObjectInsertWithPipeline.jpg)
 
-* Bulk insert of PowerShell Objects into specified Table within specified DataBase. Managing of the Primary Key uniqueness violation SQL errors, when the inserted entries already exist and ConflictingClause is specified.
+* Bulk insert of PowerShell Objects into specified Table within specified DataBase with Managing of the Primary Key uniqueness violation SQL errors, when "ConflictingClause" parameter is used and the inserted entries already exist.
 
-* Usage of SQL Transactions. The CmdLets Can evaluate whether transaction is required and automatically manage the transactions. This feature can be disabled if the transactions are manually managed within the SQL Query.
+* Usage of SQL Transactions. The CmdLets Can evaluate whether transaction is required and automatically manage the transactions. This feature can be disabled if the transactions are manually managed within the specified SQL Query.
  
-* Built-in performance measurement accessible in Verbose stream.
+* Built-in performance measurement accessible via Verbose stream.
 ![VerifyTableCreation](/Media/VerifyTableCreation.jpg)
 
-* PowerShell Parameter Sets defining the SQL Authentication
+* PowerShell Parameter Sets corresponding to the supported by the CmdLets SQL Authentication methods.
 
-* Possibility to keep the SQL Queries outside of the scripts to simplify the changes with future scripts versions release, allowing to change the scripts code without to modify the SQL part, or modifying of the SQL Queries whenever something is changed on the SQL DataBase without need of new script version release.
+* Possibility to keep the SQL Queries outside of the scripts to simplify the changes related with future scripts versions releases. Allowing either to change the scripts PowerShell code without to modify the SQL code, or modify only the SQL code without need of new script version release, whenever something is changed on SQL level.
 
 * The SQL Queries are evaluated about keywords and modified accordingly with information from the CmdLet Parameters. In this way switching from DEV DataBase to Production DataBase is transperant and does not require change of the scripts code or SQL files.
 When the keyword <DataBaseName> is used in a query it will be replaced with the value specified to the "DataBase" parameter.
@@ -57,7 +56,7 @@ Install-Module "SnsMsSqlPsModule" -Scope "AllUsers";
 OR
 1. Download SnsMsSqlPsModule.zip.
 2. Don't forget to check the .ZIP file for viruses and etc.
-3. File MD5 hash: `8E73FCB254DFF3E9856B5C350FF0C5DB`
+3. File MD5 hash: `D0D9D819D5EBF20048050A4FE8E4F082`
 4. Unzip in one of the following folders depending of your preference:
 * `C:\Users\UserName\Documents\WindowsPowerShell\Modules` - Replace "UserName" with the actual username If you want the module to be available for specific user.
 * `C:\Program Files\WindowsPowerShell\Modules` - If you want the module to be available for all users on the machine.
@@ -81,7 +80,7 @@ $DataBase = "MyDataBase";
 ```
 
 
-Create "TestTable" in the specified DataBase
+Create table "TestTable" in the specified DataBase.
 ![CreateTable](/Media/CreateTable.jpg)
 ```powershell
 
@@ -118,7 +117,7 @@ COMMIT;
 "@
 
 
-# Runs the SQL query against the specified DataBase on the specified server and instance under the security context of the currently logged on user
+# Runs the SQL query against the specified DataBase under the security context of the currently logged on user
 # Creates table "TestTable"
 Invoke-SnsMsSqlQuery `
 	-Computer "$($DBServer)" `
@@ -167,7 +166,7 @@ $CmdStart = [System.DateTime]::now;
 		"ID" = "$($_)";
 		"Message" = "Fake Event Message";
 		"Severity" = "Error";
-		"Date" = [System.DateTime]::UtcNow.AddMinutes(100001 - $_);
+		"Date" = [System.DateTime]::UtcNow.AddMinutes(100000 - $_);
 	};
 }
 [System.DateTime]::now - $CmdStart;
@@ -205,7 +204,7 @@ $Output.Count;
 
 
 # delete all previously inserted entries to prepare for next insert
-Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "DELETE FROM [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
+Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
 
 
 ```
@@ -252,7 +251,7 @@ $Output.Count;
 # Generate InputObject for the first query to delete all the entries in the Table
 # The object must have property names matching the CmdLet parameters or their aliases.
 [System.Object]$objObject = New-Object -TypeName "System.Object";
-$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Query" -Value "DELETE FROM [<DataBaseName>].[dbo].[TestTable]";
+$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Query" -Value "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]";
 [System.Object[]]$arrInput += $objObject;
 
 
@@ -263,7 +262,7 @@ $objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Query" -Value "
 $objObject | Add-Member -Force -MemberType "NoteProperty" -Name "SqlParameters" -Value `
 (
 	@{ "ID" = 1; "Message" = "Fake Message 01"; "Severity" = "Error"; "Date" = [System.DateTime]::UtcNow.AddMinutes(-2); },
-	@{ "ID" = 2; "Message" = "Fake Message 02"; "Severity" = "Warning"; "Date" = [System.DateTime]::UtcNow.AddMinutes(-2); }
+	@{ "ID" = 2; "Message" = "Fake Message 02"; "Severity" = "Warning"; "Date" = [System.DateTime]::UtcNow.AddMinutes(0); }
 );
 [System.Object[]]$arrInput += $objObject;
 
@@ -283,7 +282,7 @@ $arrInput | Invoke-SnsMsSqlQuery `
 
 
 # delete all previously inserted entries to prepare for next insert
-Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "DELETE FROM [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
+Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
 
 
 ```
@@ -304,7 +303,7 @@ ForEach ($a in 1..100000)
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "ID" -Value "$($a)";
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Message" -Value "Fake Message";
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Severity" -Value "Warning";
-	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Date" -Value([System.DateTime]::UtcNow.AddMinutes(100001 - $a));
+	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Date" -Value([System.DateTime]::UtcNow.AddMinutes(100000 - $a));
 	[System.Object[]]$arrInput += $objObject;
 }
 [System.DateTime]::now - $CmdStart;
@@ -353,14 +352,13 @@ $Output.Count;
 
 
 # delete all previously inserted entries to prepare for next insert
-Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "DELETE FROM [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
+Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
 
 
 ```
 
 * Examples of how to insert a collection of objects without to convert them to hash tables in advance.
-The object properties must match the destination table column names exactly. The values in the object properties must have type, either some struct or string class. Values from any other classes might lead to unexpected results as for example instead of the actual value to be inserted the object type.
-The reason to make this CmdLet is to be simplified the bulk upload and eliminate the need of converting the input objects to Hashtables.
+The main reason for this CmdLet is to allow users without or with limited knowledge about SQL query language to work with DataBases. The CmdLet creates the SQL query and SQL parameters on its own. The user has no need even to know what SQL injection is and how to avoid it. However this comes with limitations. The CmdLet is capable only to insert data. It can manage the Primary Key constraints violations if that is requested, but it cannot manage the UNIQUE constraints on not Primary Key columns. Additionally the input objects properties must match the destination table column names exactly. The values in the object properties must have type, either struct or string class. Values from any other classes might lead to unexpected results. The destination DataBase Table must exist. The CmdLet Can evaluate the destination table but cannot create tables.
 
 Without using the pipeline
 ![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.jpg)
@@ -393,7 +391,7 @@ $Output.Count;
 
 
 # delete all previously inserted entries to prepare for next insert
-Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "DELETE FROM [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
+Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Query "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]" -UseCurrentLogOnSession -Verbose;
 
 
 ```
