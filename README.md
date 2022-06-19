@@ -26,7 +26,7 @@
 * Built-in performance measurement accessible via Verbose stream.
 ![VerifyTableCreation](/Media/VerifyTableCreation.jpg)
 
-* PowerShell Parameter Sets corresponding to the supported by the CmdLets SQL Authentication methods.
+* PowerShell Parameter Sets corresponds to the supported by the CmdLets SQL Authentication methods.
 
 * Possibility to keep the SQL Queries outside of the scripts to simplify the changes related with future scripts versions releases. Allowing either to change the scripts PowerShell code without to modify the SQL code, or modify only the SQL code without need of new script version release, whenever something is changed on SQL level.
 
@@ -56,7 +56,7 @@ Install-Module "SnsMsSqlPsModule" -Scope "AllUsers";
 OR
 1. Download SnsMsSqlPsModule.zip.
 2. Don't forget to check the .ZIP file for viruses and etc.
-3. File MD5 hash: `D0D9D819D5EBF20048050A4FE8E4F082`
+3. File MD5 hash: `F675B96AD5788BD55BCACFD300F1C365`
 4. Unzip in one of the following folders depending of your preference:
 * `C:\Users\UserName\Documents\WindowsPowerShell\Modules` - Replace "UserName" with the actual username If you want the module to be available for specific user.
 * `C:\Program Files\WindowsPowerShell\Modules` - If you want the module to be available for all users on the machine.
@@ -65,7 +65,9 @@ OR
 ```powershell
 Get-ChildItem -Path "PathWhereModuleIsInstalled" -Recurse | Unblock-File
 ```
-6. PowerShell Examples:
+
+
+## PowerShell Examples:
 
 * Import the module, and create a table inside the specified DataBase.
 ```powershell
@@ -358,7 +360,8 @@ Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Quer
 ```
 
 * Examples of how to insert a collection of objects without to convert them to hash tables in advance.
-The main reason for this CmdLet is to allow users without or with limited knowledge about SQL query language to work with DataBases. The CmdLet creates the SQL query and SQL parameters on its own. The user has no need even to know what SQL injection is and how to avoid it. However this comes with limitations. The CmdLet is capable only to insert data. It can manage the Primary Key constraints violations if that is requested, but it cannot manage the UNIQUE constraints on not Primary Key columns. Additionally the input objects properties must match the destination table column names exactly. The values in the object properties must have type, either struct or string class. Values from any other classes might lead to unexpected results. The destination DataBase Table must exist. The CmdLet Can evaluate the destination table but cannot create tables.
+The main reason for this CmdLet is to allow users without or with limited knowledge about SQL query language to work with DataBases. The CmdLet creates the SQL query and the SQL parameters on its own. The user has no need even to know what SQL injection is and how to avoid it. However this comes with limitations. The CmdLet is capable only to insert data. It can manage the Primary Key constraints violations if that is requested, but it cannot manage the UNIQUE constraints on not Primary Key columns. The values in the object properties must have type, either struct or string class. Values from any other classes might lead to unexpected results. The destination DataBase Table must exist. The CmdLet Can evaluate the destination table but cannot create tables.
+During the insert the values in properties from the input objects that correspond to columns in the destination table will be inserted in the corresponding columns. The values in input object properties that do not correspond to a column in the destination table will be ignored. The columns in the destination table with no matching properties will have value NULL.
 
 Without using the pipeline
 ![ObjectInsertNoPipeline](/Media/ObjectInsertNoPipeline.jpg)
