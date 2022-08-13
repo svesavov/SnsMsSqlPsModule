@@ -247,14 +247,14 @@ $Output.Count;
 
 
 # Create an empty array to hold the InputObjects which will be send to "Invoke-SnsMsSqlQuery"
-[System.Object[]]$arrInput = @();
+[System.Array]$arrInput = @();
 
 
 # Generate InputObject for the first query to delete all the entries in the Table
 # The object must have property names matching the CmdLet parameters or their aliases.
 [System.Object]$objObject = New-Object -TypeName "System.Object";
 $objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Query" -Value "TRUNCATE TABLE [<DataBaseName>].[dbo].[TestTable]";
-[System.Object[]]$arrInput += $objObject;
+[System.Array]$arrInput += $objObject;
 
 
 # Generate InputObject for the second query to insert some data in the Table
@@ -266,13 +266,13 @@ $objObject | Add-Member -Force -MemberType "NoteProperty" -Name "SqlParameters" 
 	@{ "ID" = 1; "Message" = "Fake Message 01"; "Severity" = "Error"; "Date" = [System.DateTime]::UtcNow.AddMinutes(-2); },
 	@{ "ID" = 2; "Message" = "Fake Message 02"; "Severity" = "Warning"; "Date" = [System.DateTime]::UtcNow.AddMinutes(0); }
 );
-[System.Object[]]$arrInput += $objObject;
+[System.Array]$arrInput += $objObject;
 
 
 # Generate InputObject for the third query to verify the inserting the entry from the second query
 [System.Object]$objObject = New-Object -TypeName "System.Object";
 $objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Query" -Value "SELECT * FROM [<DataBaseName>].[dbo].[TestTable]";
-[System.Object[]]$arrInput += $objObject;
+[System.Array]$arrInput += $objObject;
 
 
 # Run All The 3 Queries
@@ -298,7 +298,7 @@ Generate a collection of objects
 
 # Generate Some Test Data
 $CmdStart = [System.DateTime]::now;
-[System.Object[]]$arrInput = @();
+[System.Array]$arrInput = @();
 ForEach ($a in 1..100000)
 {
 	[System.Object]$objObject = New-Object -TypeName "System.Object";
@@ -306,7 +306,7 @@ ForEach ($a in 1..100000)
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Message" -Value "Fake Message";
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Severity" -Value "Warning";
 	$objObject | Add-Member -Force -MemberType "NoteProperty" -Name "Date" -Value([System.DateTime]::UtcNow.AddMinutes(100000 - $a));
-	[System.Object[]]$arrInput += $objObject;
+	[System.Array]$arrInput += $objObject;
 }
 [System.DateTime]::now - $CmdStart;
 
