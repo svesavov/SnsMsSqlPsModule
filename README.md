@@ -43,7 +43,7 @@ Get-Help Invoke-SnsMsSqlObjectInsert -Full;
 
 ## Requirements
 
-* .NET Framework 4.5
+* .NET Framework 4.5.2
 * PowerShell 4
 
 
@@ -56,7 +56,7 @@ Install-Module "SnsMsSqlPsModule" -Scope "AllUsers";
 OR
 1. Download SnsMsSqlPsModule.zip.
 2. Don't forget to check the .ZIP file for viruses and etc.
-3. File MD5 hash: `F675B96AD5788BD55BCACFD300F1C365`
+3. File MD5 hash: `E20A08E871024AEC01743B4F22D563E6`
 4. Unzip in one of the following folders depending of your preference:
 * `C:\Users\UserName\Documents\WindowsPowerShell\Modules` - Replace "UserName" with the actual username If you want the module to be available for specific user.
 * `C:\Program Files\WindowsPowerShell\Modules` - If you want the module to be available for all users on the machine.
@@ -325,7 +325,7 @@ Convert the objects array to Hashtables collection
 # ToHashTbl() custom method works with PSCustomObject only
 # From other hand any .NET object can be converted to PSCustomObject using "Select-Object *" command
 $CmdStart = [System.DateTime]::now;
-$arr = [SnsMsSqlPsModule.PsObjectToHashTbl]::ToHashTbl($($arrInput | Select-Object *))
+$arr = [SnsMsSqlPsModule.PsObjToHashTbl]::ToHashTbl($($arrInput | Select-Object *));
 [System.DateTime]::now - $CmdStart;
 
 
@@ -441,7 +441,7 @@ Invoke-SnsMsSqlQuery -Computer "$($DBServer)" -DatabaseName "$($DataBase)" -Quer
 
 - svesavov on GitHub: [https://github.com/svesavov](https://github.com/svesavov)
 - svesavov on PowerShell Gallery: [https://www.powershellgallery.com/packages/SnsMsSqlPsModule/](https://www.powershellgallery.com/packages/SnsMsSqlPsModule/)
-- Svetoslav Savov on LinkedIn [https://www.linkedin.com/in/svetoslavsavov](https://www.linkedin.com/in/svetoslavsavov)
+- Svetoslav Savov on LinkedIn: [https://www.linkedin.com/in/svetoslavsavov](https://www.linkedin.com/in/svetoslavsavov)
 - MS SQL Server: [https://www.microsoft.com/en-us/sql-server/sql-server-downloads](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 - MS SQL Data Types: [https://docs.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql](https://docs.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql)
 - MS SQL Supported SQL Syntax: [https://docs.microsoft.com/en-us/sql/t-sql/language-reference](https://docs.microsoft.com/en-us/sql/t-sql/language-reference)
