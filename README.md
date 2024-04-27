@@ -43,7 +43,7 @@ Get-Help Invoke-SnsMsSqlObjectInsert -Full;
 
 ## Requirements
 
-* .NET Framework 4.5.2
+* .NET Framework 4.8
 * PowerShell 4
 
 
@@ -56,7 +56,7 @@ Install-Module "SnsMsSqlPsModule" -Scope "AllUsers";
 OR
 1. Download SnsMsSqlPsModule.zip.
 2. Don't forget to check the .ZIP file for viruses and etc.
-3. File MD5 hash: `E20A08E871024AEC01743B4F22D563E6`
+3. File MD5 hash: `D9518C5FF8148548F6F66E8AD8E79122`
 4. Unzip in one of the following folders depending of your preference:
 * `C:\Users\UserName\Documents\WindowsPowerShell\Modules` - Replace "UserName" with the actual username If you want the module to be available for specific user.
 * `C:\Program Files\WindowsPowerShell\Modules` - If you want the module to be available for all users on the machine.
